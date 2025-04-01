@@ -1,4 +1,4 @@
-BASE := ../cml-definitions
+BASE := ../BUILD/refplat-images-docker_all/var/lib/libvirt/images
 DEST := $(BASE)/virl-base-images
 NDEF := $(BASE)/node-definitions
 TAG  := $(shell echo $(VERSION) | tr '[:upper:]~' '[:lower:]-')
@@ -18,7 +18,7 @@ definitions: $(DNT)
 		-e "s/{{SHA256}}/$$sha256/g" \
 	  -e "s/{{DATE}}/$$date/" \
 	>$(DNT)/$(NTAG).yaml
-	cp node-definition $(NDEF)/$(NAME)
+	cp node-definition $(NDEF)/$(NAME).yaml
 
 $(DNT):
 	mkdir -p $@

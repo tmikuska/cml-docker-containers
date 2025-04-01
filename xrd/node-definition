@@ -1,3 +1,9 @@
+#
+# IOS XRd node definition
+# generated 2025-04-01
+# part of VIRL^2
+#
+
 id: xrd
 configuration:
   generator:
@@ -11,7 +17,7 @@ configuration:
         content: |-
           {
             "docker": {
-              "image": "ios-xr/xrd-control-plane:24.2.2",
+              "image": "xrd:latest",
               "mounts": [
                 "type=bind,source=cfg/first-boot.cfg,target=/etc/xrd/first-boot.cfg"
               ],

@@ -1,6 +1,6 @@
-cml-definitions/virl-base-images/*
-cml-definitions/node-definitions/*
-!cml-definitions/virl-base-images/.gitkeep
-!cml-definitions/node-definitions/.gitkeep
 xrd/xrd-control-plane-container-x86*.tgz
 BUILD/*.deb
+!BUILD/refplat-images-docker_all/var/lib/libvirt/images/node-definitions/.gitkeep
+!BUILD/refplat-images-docker_all/var/lib/libvirt/images/virl-base-images/.gitkeep
+BUILD/refplat-images-docker_all/var/lib/libvirt/images/node-definitions/*
+BUILD/refplat-images-docker_all/var/lib/libvirt/images/virl-base-images/*

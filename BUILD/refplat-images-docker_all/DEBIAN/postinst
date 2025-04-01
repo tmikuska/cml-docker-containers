@@ -18,16 +18,17 @@ set -e
 # the debian-policy package
 
 case "$1" in
-configure)
-    chown -R libvirt-qemu:virl2 /var/lib/libvirt/images/*
-    ;;
+    configure)
+        find /var/lib/libvirt/images/virl-base-images -type f -name '*.img.gz' -exec gunzip -f {} \;
+        chown -R libvirt-qemu:virl2 /var/lib/libvirt/images/*
+        ;;
 
-abort-upgrade | abort-remove | abort-deconfigure) ;;
+    abort-upgrade | abort-remove | abort-deconfigure) ;;
 
-*)
-    echo "postinst called with unknown argument \`$1'" >&2
-    exit 1
-    ;;
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+        ;;
 esac
 
 # dh_installdeb will replace this with shell code automatically

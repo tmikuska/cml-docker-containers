@@ -50,9 +50,9 @@ case "$WAIT" in
         ;;
 esac
 
-# start i3 and firefox
+# start i3 and Firefox
 /usr/bin/i3 &
-/usr/bin/firefox-esr $HOME_URL &
+/usr/bin/firefox $HOME_URL &
 
 # wait for firefox window
 while ! xdotool search --name "Firefox"; do

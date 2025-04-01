@@ -1,2 +1,2 @@
 # DUMMY
-FROM scratch
+FROM ios-xr/xrd-control-plane:latest
