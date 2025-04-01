@@ -1,0 +1,41 @@
+FROM debian:bookworm-slim
+
+ARG uid
+ARG version
+
+RUN test -n "${uid}" || (echo "docker build-arg uid must be set" && false)
+
+RUN apt-get update && apt-get upgrade -y && \
+  DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y curl ca-certificates
+RUN install -d -m 0755 /etc/apt/keyrings && install -d -m 0755 /etc/apt/preferences.d
+# https://keyserver.ubuntu.com/pks/lookup?search=C0BA5CE6DC6315A3&fingerprint=on&op=index
+COPY 35baa0b33e9eb396f59ca838c0ba5ce6dc6315a3.asc /etc/apt/trusted.gpg.d/mozilla.gpg
+COPY mozilla-signing-key.gpg /etc/apt/keyrings/packages.mozilla.org.asc
+RUN echo "deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main" >/etc/apt/sources.list.d/mozilla.list
+# RUN <<EOF
+# echo "deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main" >/etc/apt/sources.list.d/mozilla.list
+# mkdir /etc/apt/preferences.d
+# echo 'Package: *
+# Pin: origin packages.mozilla.org
+# Pin-Priority: 1000
+# 
+# Package: firefox*
+# Pin: release o=Ubuntu
+# Pin-Priority: -1
+# ' >/etc/apt/preferences.d/mozilla
+# EOF
+# 
+RUN apt-get update && \
+  DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
+  ca-certificates \
+  i3 \
+  xdotool \
+  firefox=${version} && \
+  apt-get autoremove && apt-get clean && rm -rf /var/lib/apt/lists/* && \
+  useradd -l --create-home --shell /bin/bash -u ${uid} --user-group debian
+
+USER debian
+COPY i3config /home/debian/.config/i3/config
+COPY start.sh /start.sh
+CMD ["/start.sh"]
+
