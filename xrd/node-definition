@@ -1,0 +1,196 @@
+id: xrd
+configuration:
+  generator:
+    driver: iosxrv9000
+  provisioning:
+    volume_name: cfg
+    media_type: raw
+    files:
+      - name: config.json
+        editable: false
+        content: |-
+          {
+            "docker": {
+              "image": "ios-xr/xrd-control-plane:24.2.2",
+              "mounts": [
+                "type=bind,source=cfg/first-boot.cfg,target=/etc/xrd/first-boot.cfg"
+              ],
+              "env": [
+                "XR_MGMT_INTERFACES=linux:{{ dev (index .Devices 0).DeviceName }},chksum",
+                "XR_INTERFACES={{- range $idx, $iface := .Devices }}{{ if gt $idx 0 }}{{ if gt $idx 1 }};{{ end }}linux:{{ dev $iface.DeviceName }},chksum{{ end }}{{- end }}",
+                "XR_FIRST_BOOT_CONFIG=/etc/xrd/first-boot.cfg"
+              ],
+              "caps": [
+                "AUDIT_WRITE",
+                "CHOWN",
+                "DAC_OVERRIDE",
+                "FOWNER",
+                "FSETID",
+                "KILL",
+                "MKNOD",
+                "NET_BIND_SERVICE",
+                "NET_RAW",
+                "SETFCAP",
+                "SETGID",
+                "SETUID",
+                "SETPCAP",
+                "SYS_CHROOT",
+                "IPC_LOCK",
+                "NET_ADMIN",
+                "SYS_ADMIN",
+                "SYS_NICE",
+                "SYS_PTRACE",
+                "SYS_RESOURCE"
+              ],
+              "misc_args": [
+                "--device",
+                "/dev/fuse",
+                "--device",
+                "/dev/net/tun",
+                "--security-opt",
+                "apparmor=unconfined",
+                "--security-opt",
+                "label=disable"
+              ]
+            },
+            "device_name_map": {
+              "MgmtEth0/RP0/CPU0/0": "eth0",
+              "GigabitEthernet0/0/0/0": "eth1",
+              "GigabitEthernet0/0/0/1": "eth2",
+              "GigabitEthernet0/0/0/2": "eth3",
+              "GigabitEthernet0/0/0/3": "eth4",
+              "GigabitEthernet0/0/0/4": "eth5",
+              "GigabitEthernet0/0/0/5": "eth6",
+              "GigabitEthernet0/0/0/6": "eth7",
+              "GigabitEthernet0/0/0/7": "eth8",
+              "GigabitEthernet0/0/0/8": "eth9",
+              "GigabitEthernet0/0/0/9": "eth10",
+              "GigabitEthernet0/0/0/10": "eth11",
+              "GigabitEthernet0/0/0/11": "eth12",
+              "GigabitEthernet0/0/0/12": "eth13",
+              "GigabitEthernet0/0/0/13": "eth14",
+              "GigabitEthernet0/0/0/14": "eth15",
+              "GigabitEthernet0/0/0/15": "eth16",
+              "GigabitEthernet0/0/0/16": "eth17",
+              "GigabitEthernet0/0/0/17": "eth18",
+              "GigabitEthernet0/0/0/18": "eth19",
+              "GigabitEthernet0/0/0/19": "eth20",
+              "GigabitEthernet0/0/0/20": "eth21",
+              "GigabitEthernet0/0/0/21": "eth22",
+              "GigabitEthernet0/0/0/22": "eth23",
+              "GigabitEthernet0/0/0/23": "eth24",
+              "GigabitEthernet0/0/0/24": "eth25",
+              "GigabitEthernet0/0/0/25": "eth26",
+              "GigabitEthernet0/0/0/26": "eth27",
+              "GigabitEthernet0/0/0/27": "eth28",
+              "GigabitEthernet0/0/0/28": "eth29",
+              "GigabitEthernet0/0/0/29": "eth30",
+              "GigabitEthernet0/0/0/30": "eth31"
+            },
+            "shell": "/bin/bash",
+            "busybox": true
+          }
+      - name: first-boot.cfg
+        editable: true
+        content: |-
+          hostname inserthostname-here
+          username cisco
+          group root-lr
+          group cisco-support
+          password cisco
+          !
+          username admin
+          group root-lr
+          group cisco-support
+          password cisco
+          !
+          username lab
+          group root-lr
+          group cisco-support
+          password cisco
+          !
+          end
+device:
+  interfaces:
+    has_loopback_zero: true
+    min_count: 1
+    default_count: 4
+    loopback:
+      - Loopback0
+    management:
+      - MgmtEth0/RP0/CPU0/0
+    physical:
+      - MgmtEth0/RP0/CPU0/0
+      - GigabitEthernet0/0/0/0
+      - GigabitEthernet0/0/0/1
+      - GigabitEthernet0/0/0/2
+      - GigabitEthernet0/0/0/3
+      - GigabitEthernet0/0/0/4
+      - GigabitEthernet0/0/0/5
+      - GigabitEthernet0/0/0/6
+      - GigabitEthernet0/0/0/7
+      - GigabitEthernet0/0/0/8
+      - GigabitEthernet0/0/0/9
+      - GigabitEthernet0/0/0/10
+      - GigabitEthernet0/0/0/11
+      - GigabitEthernet0/0/0/12
+      - GigabitEthernet0/0/0/13
+      - GigabitEthernet0/0/0/14
+      - GigabitEthernet0/0/0/15
+      - GigabitEthernet0/0/0/16
+      - GigabitEthernet0/0/0/17
+      - GigabitEthernet0/0/0/18
+      - GigabitEthernet0/0/0/19
+      - GigabitEthernet0/0/0/20
+      - GigabitEthernet0/0/0/21
+      - GigabitEthernet0/0/0/22
+      - GigabitEthernet0/0/0/23
+      - GigabitEthernet0/0/0/24
+      - GigabitEthernet0/0/0/25
+      - GigabitEthernet0/0/0/26
+      - GigabitEthernet0/0/0/27
+      - GigabitEthernet0/0/0/28
+      - GigabitEthernet0/0/0/29
+      - GigabitEthernet0/0/0/30
+    serial_ports: 2
+inherited:
+  image:
+    ram: true
+    cpus: true
+    cpu_limit: true
+    data_volume: false
+    boot_disk_size: false
+  node:
+    ram: true
+    cpus: true
+    cpu_limit: true
+    data_volume: false
+    boot_disk_size: false
+general:
+  description: Cisco IOS XRd (Docker)
+  nature: router
+  read_only: false
+schema_version: 0.0.1
+sim:
+  linux_native:
+    cpus: 1
+    ram: 2048
+    driver: iosxrv9000
+    libvirt_domain_driver: docker
+    cpu_limit: 100
+boot:
+  timeout: 3600
+  completed:
+    - '--- Administrative User Dialog ---'
+    - '%MGBL-CVAC-4-CONFIG_DONE'
+    - '%INFRA-ZTP-4-EXITED'
+pyats:
+  os: iosxr
+  config_extract_command: show running-config
+ui:
+  description: Cisco IOS xrd Router platform (control plane)
+  group: Cisco
+  icon: router
+  label: IOS XRd
+  label_prefix: xrd-
+  visible: true

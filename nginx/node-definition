@@ -1,12 +1,10 @@
-id: chrome
+id: nginx
 sim:
   linux_native:
     driver: ubuntu
     libvirt_domain_driver: docker
     cpus: 1
-    ram: 4096
-    video:
-      memory: 1
+    ram: 256
     cpu_limit: 100
 inherited:
   image:
@@ -22,8 +20,8 @@ inherited:
     data_volume: false
     boot_disk_size: false
 general:
-  nature: host
-  description: "Google Chrome stable"
+  nature: server
+  description: Nginx (Docker)
   read_only: false
 schema_version: 0.0.1
 configuration:
@@ -37,38 +35,43 @@ configuration:
         content: |-
           {
             "docker": {
-              "image": "chrome:latest",
+              "image": "nginx:latest",
+              "env": [
+                "SOME_VAR=1",
+                "SOME_OTHER_VAR=nginx runs here"
+              ],
               "mounts": [
                 "type=bind,source=cfg/boot.sh,target=/boot.sh"
-              ],
-              "misc_args": [
-                "--security-opt","seccomp=unconfined"
               ]
             },
-            "shell": "/bin/sh",
-            "day0cmd": [ "/bin/sh", "/boot.sh" ],
-            "busybox": true,
-            "vnc": {
-              "width": 1280,
-              "height": 1024,
-              "depth": 24
-            }
+            "shell": "/bin/bash",
+            "day0cmd": [ "/bin/bash", "/boot.sh" ],
+            "busybox": true
           }
         editable: false
       - name: boot.sh
+        editable: true
         content: |-
-          # insert commands here, e.g. a static IP address
+          # Insert more commands here
           # ip address add dev eth1 10.0.0.1/24
           # ip link set dev eth1 up
+          # keep the next line to indicate that the machine is ready
+          echo "READY" >/dev/console
           exit 0
-        editable: true
       - name: environment
         content: |-
-          # -- These are understood by the start script
-          # -- Homepage to open at start (needs network!)
-          # HOME_URL=https://www.cisco.com/go/cml
-          # -- Wait additional time for network before starting Chrome
-          # WAIT=2
+          # Create additional environment variables
+          # VARIABLE="some value"
+        editable: true
+      - name: mounts
+        content: |-
+          # Can map a volume with www data into container so that Nginx can use
+          # it. By default, only type=volume is allowed, see
+          # /etc/default/docker-shim.env
+          # Note: Volumes must exist to be usable and can be created via
+          # "docker volume create wwwdata" where wwwdata is the name
+          #
+          # type=volume,source=wwwdata,target=/usr/share/nginx/html
         editable: true
 device:
   interfaces:
@@ -84,10 +87,11 @@ boot:
   timeout: 30
   completed:
     - READY
-  uses_regex: false
+pyats:
+  os: linux
 ui:
   group: Others
-  icon: host
-  label: Chrome
-  label_prefix: chrome-
+  icon: server
+  label: Nginx
+  label_prefix: nginx-
   visible: true

@@ -1,4 +1,4 @@
-id: chrome
+id: firefox
 sim:
   linux_native:
     driver: ubuntu
@@ -23,7 +23,7 @@ inherited:
     boot_disk_size: false
 general:
   nature: host
-  description: "Google Chrome stable"
+  description: Firefox (docker)
   read_only: false
 schema_version: 0.0.1
 configuration:
@@ -37,7 +37,7 @@ configuration:
         content: |-
           {
             "docker": {
-              "image": "chrome:latest",
+              "image": "firefox:latest",
               "mounts": [
                 "type=bind,source=cfg/boot.sh,target=/boot.sh"
               ],
@@ -57,7 +57,7 @@ configuration:
         editable: false
       - name: boot.sh
         content: |-
-          # insert commands here, e.g. a static IP address
+          # insert commands here
           # ip address add dev eth1 10.0.0.1/24
           # ip link set dev eth1 up
           exit 0
@@ -67,7 +67,7 @@ configuration:
           # -- These are understood by the start script
           # -- Homepage to open at start (needs network!)
           # HOME_URL=https://www.cisco.com/go/cml
-          # -- Wait additional time for network before starting Chrome
+          # -- Wait additional time for network before starting browser
           # WAIT=2
         editable: true
 device:
@@ -88,6 +88,6 @@ boot:
 ui:
   group: Others
   icon: host
-  label: Chrome
-  label_prefix: chrome-
+  label: Firefox
+  label_prefix: firefox-
   visible: true

@@ -15,3 +15,6 @@ clean:
 	done
 
 .PHONY: all clean $(SUBDIRS)
+
+deb:
+	cd BUILD; dpkg-deb --build -Znone refplat-images-docker_all

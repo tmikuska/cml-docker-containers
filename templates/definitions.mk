@@ -1,11 +1,13 @@
-DEST:=../cml-definitions/virl-base-images
-TAG := $(shell echo $(VERSION) | tr '[:upper:]~' '[:lower:]-')
-NTAG:=$(NAME)-$(TAG)
-DNT:=$(DEST)/$(NTAG)
+BASE := ../cml-definitions
+DEST := $(BASE)/virl-base-images
+NDEF := $(BASE)/node-definitions
+TAG  := $(shell echo $(VERSION) | tr '[:upper:]~' '[:lower:]-')
+NTAG := $(NAME)-$(TAG)
+DNT  := $(DEST)/$(NTAG)
 
 .PHONY: definitions
 definitions: $(DNT)
-	sha256=`docker image inspect -f '{{ index .Id }}' $(NTAG) | cut -d':' -f2)` && \
+	sha256=`docker image inspect -f '{{ index .Id }}' $(NAME):latest | cut -d':' -f2)` && \
   date=`date +"%Y%m%d"` && \
 	cat ../templates/image-definition | sed \
 		-e 's/{{DESCR}}/$(DESCR)/g' \
@@ -16,6 +18,7 @@ definitions: $(DNT)
 		-e "s/{{SHA256}}/$$sha256/g" \
 	  -e "s/{{DATE}}/$$date/" \
 	>$(DNT)/$(NTAG).yaml
+	cp node-definition $(NDEF)/$(NAME)
 
 $(DNT):
 	mkdir -p $@

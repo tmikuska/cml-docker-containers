@@ -1,12 +1,10 @@
-id: chrome
+id: splunk
 sim:
   linux_native:
     driver: ubuntu
     libvirt_domain_driver: docker
     cpus: 1
     ram: 4096
-    video:
-      memory: 1
     cpu_limit: 100
 inherited:
   image:
@@ -23,7 +21,7 @@ inherited:
     boot_disk_size: false
 general:
   nature: host
-  description: "Google Chrome stable"
+  description: Splunk
   read_only: false
 schema_version: 0.0.1
 configuration:
@@ -34,60 +32,46 @@ configuration:
     media_type: raw
     files:
       - name: config.json
+        editable: false
         content: |-
           {
             "docker": {
-              "image": "chrome:latest",
+              "image": "splunk:latest",
               "mounts": [
                 "type=bind,source=cfg/boot.sh,target=/boot.sh"
               ],
-              "misc_args": [
-                "--security-opt","seccomp=unconfined"
+              "env": [
+                "SPLUNK_START_ARGS=--accept-license",
+                "SPLUNK_PASSWORD=Cisc0123#"
               ]
             },
-            "shell": "/bin/sh",
-            "day0cmd": [ "/bin/sh", "/boot.sh" ],
-            "busybox": true,
-            "vnc": {
-              "width": 1280,
-              "height": 1024,
-              "depth": 24
-            }
+            "privileged": true,
+            "shell": "/bin/bash",
+            "day0cmd": [ "/bin/bash", "/boot.sh" ],
+            "busybox": true
           }
-        editable: false
       - name: boot.sh
+        editable: true
         content: |-
-          # insert commands here, e.g. a static IP address
+          # insert more commands here
           # ip address add dev eth1 10.0.0.1/24
           # ip link set dev eth1 up
           exit 0
-        editable: true
-      - name: environment
-        content: |-
-          # -- These are understood by the start script
-          # -- Homepage to open at start (needs network!)
-          # HOME_URL=https://www.cisco.com/go/cml
-          # -- Wait additional time for network before starting Chrome
-          # WAIT=2
-        editable: true
 device:
   interfaces:
     physical:
       - eth0
-      - eth1
-      - eth2
-      - eth3
     has_loopback_zero: false
     default_count: 1
     serial_ports: 2
 boot:
-  timeout: 30
+  timeout: 60
   completed:
-    - READY
+    - Ansible playbook complete,
   uses_regex: false
 ui:
   group: Others
   icon: host
-  label: Chrome
-  label_prefix: chrome-
+  label: Splunk
+  label_prefix: splunk-
   visible: true

@@ -1,0 +1,9 @@
+Package: refplat-images-docker
+Version: 1.0
+Section: custom
+Priority: optional
+Architecture: all
+Essential: no
+Depends: cml2
+Maintainer: rschmied@cisco.com
+Description: Docker sample reference platform node defs and images for CML2
