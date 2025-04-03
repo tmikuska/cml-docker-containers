@@ -19,7 +19,8 @@ set -e
 
 case "$1" in
     configure)
-        find /var/lib/libvirt/images/virl-base-images -type f -name '*.img.gz' -exec gunzip -f {} \;
+        # we keep the compressed images, as Docker can load them as-is
+        # find /var/lib/libvirt/images/virl-base-images -type f -name '*.img.gz' -exec gunzip -f {} \;
         chown -R libvirt-qemu:virl2 /var/lib/libvirt/images/*
         ;;
 

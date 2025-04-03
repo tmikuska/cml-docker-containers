@@ -1,6 +1,10 @@
 .PHONY: all
 all: build definitions
 
+# the name of our package
+PKG := refplat-images-docker
+export PKG
+
 include vars.mk
 include ../templates/definitions.mk
 
@@ -9,17 +13,17 @@ clean:
 	rm -rf $(DNT)
 	docker image ls --format "{{ .ID }}" $(NAME) | uniq | xargs docker image rm -f
 
-XRD := xrd-control-plane-container-x86*.tgz
+XRD := xrd-control-plane-container-x86.$(VERSION).tgz
 IMG := xrd-control-plane-container-x64.dockerv1.tgz
 
 .PHONY: build
-build: $(DNT)
-	@if ! [ -f $(XRD) ]; then \
+build: $(DNT) $(NDEF)
+	@if ! [ -f "$(XRD)" ]; then \
 	  echo "required file missing, see README"; \
 		exit 1; \
 	fi
 	tar zxvf $(XRD) ./$(IMG)
-	# gunzip --stdout $(IMG) | docker load
+	gunzip --stdout $(IMG) | docker load
 	# docker image tag ios-xr/xrd-control-plane:$(VERSION) ios-xr/xrd-control-plane:latest
 	rm -f $(DNT)/$(NTAG).img.gz
 	mv $(IMG) $(DNT)/$(NTAG).img.gz

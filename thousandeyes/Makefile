@@ -1,6 +1,10 @@
 .PHONY: all
 all: build definitions
 
+# the name of our package
+PKG := refplat-images-docker
+export PKG
+
 include vars.mk
 include ../templates/definitions.mk
 
@@ -12,10 +16,12 @@ clean:
 IMG := te-ea.tgz
 
 .PHONY: build
-build: $(DNT)
+build: $(DNT) $(NDEF)
+	docker pull thousandeyes/enterprise-agent:latest-agent
+	docker save thousandeyes/enterprise-agent:latest-agent | gzip - >$(IMG)
 	@if ! [ -f $(IMG) ]; then \
 	  echo "required file missing, see README"; \
 		exit 1; \
 	fi
 	rm -f $(DNT)/$(NTAG).img.gz
-	cp $(IMG) $(DNT)/$(NTAG).img.gz
+	mv $(IMG) $(DNT)/$(NTAG).img.gz

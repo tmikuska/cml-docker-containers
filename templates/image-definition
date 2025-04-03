@@ -8,7 +8,7 @@ id: {{NTAG}}
 label: {{NAME}} {{TAG}}
 description: {{DESCR}} {{VERSION}} (Docker)
 node_definition_id: {{NAME}}
-disk_image: {{NTAG}}.img
+disk_image: {{NTAG}}.img.gz
 read_only: true
 schema_version: 0.0.1
 sha256: {{SHA256}}

@@ -116,8 +116,8 @@ boot:
   completed:
     - READY
 ui:
-  description: |2-
-    Syslog NG server
+  description: |
+    Syslog NG server {{CMLNODEDEFVERSION}}
   group: Others
   icon: server
   label: Syslog

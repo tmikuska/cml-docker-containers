@@ -91,6 +91,8 @@ boot:
 pyats:
   os: linux
 ui:
+  description: |2-
+    Nginx web server {{CMLNODEDEFVERSION}}
   group: Others
   icon: server
   label: Nginx

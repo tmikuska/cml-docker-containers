@@ -194,7 +194,8 @@ pyats:
   os: iosxr
   config_extract_command: show running-config
 ui:
-  description: Cisco IOS xrd Router platform (control plane)
+  description: |
+    Cisco IOS xrd Router platform (control plane) {{CMLNODEDEFVERSION}}
   group: Cisco
   icon: router
   label: IOS XRd

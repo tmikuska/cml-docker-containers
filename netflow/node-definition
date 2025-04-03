@@ -79,7 +79,7 @@ boot:
     - READY
 ui:
   description: |2-
-    Netflow daemon
+    Netflow daemon {{CMLNODEDEFVERSION}}
   group: Others
   icon: server
   label: Netflow

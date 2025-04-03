@@ -9,7 +9,8 @@ configuration:
       - name: boot.sh
         editable: false
         content: |-
-          (sleep 2 && (tail -f /var/log/agent/te-agent.log | tee -a /dev/console) &) &
+          # (sleep 2 && (tail -f /var/log/agent/te-agent.log | tee -a /dev/console) &) &
+          (tail -f /var/log/agent/te-agent.log | tee -a /dev/console) &
       - name: environment
         editable: true
         content: |-
@@ -87,12 +88,13 @@ sim:
     libvirt_domain_driver: docker
     cpu_limit: 100
 boot:
-  timeout: 3600
+  timeout: 30
   completed:
     - "ThousandEyes Agent starting up"
     - "READY"
 ui:
-  description: Cisco ThousandEyes Enterprise Agent
+  description: |
+    ThousandEyes Enterprise Agent
   group: Cisco
   icon: server
   label: ThousandEyes Agent

@@ -65,6 +65,16 @@ configuration:
           # keep the next line to indicate that the machine is ready
           echo "READY" >/dev/console
           exit 0
+      - name: mounts
+        content: |-
+          # Can map a volume with radius server data into the container
+          # it. By default, only type=volume is allowed, see
+          # /etc/default/docker-shim.env
+          # Note: Volumes must exist to be usable and can be created via
+          # "docker volume create radiusdata" where radiusdata is the name
+          #
+          # type=volume,source=radiusdata,target=/var/somedir
+        editable: true
 device:
   interfaces:
     has_loopback_zero: false
@@ -108,7 +118,7 @@ boot:
     - READY
 ui:
   description: |2-
-    FreeRadius server
+    FreeRadius server {{CMLNODEDEFVERSION}}
   group: Others
   icon: server
   label: Radius

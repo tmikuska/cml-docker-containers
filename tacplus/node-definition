@@ -113,8 +113,8 @@ boot:
   completed:
     - READY
 ui:
-  description: |2-
-    Tacacs plus
+  description: |
+    Tacacs plus server {{CMLNODEDEFVERSION}}
   group: Others
   icon: server
   label: TacPlus

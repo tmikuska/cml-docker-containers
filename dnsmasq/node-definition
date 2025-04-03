@@ -736,6 +736,16 @@ configuration:
           # keep the next line to indicate that the machine is ready
           echo "READY" >/dev/console
           exit 0
+      - name: mounts
+        content: |-
+          # Can map a volume with TFTP or name server data into the container
+          # it. By default, only type=volume is allowed, see
+          # /etc/default/docker-shim.env
+          # Note: Volumes must exist to be usable and can be created via
+          # "docker volume create dnsmasqdata" where dnsmasqdata is the name
+          #
+          # type=volume,source=dnsmasqdata,target=/var/ftpd
+        editable: true
 device:
   interfaces:
     has_loopback_zero: false
@@ -779,7 +789,7 @@ boot:
     - READY
 ui:
   description: |2-
-    Dnsmas server
+    Dnsmasq server (DHCP, DNS, TFTP)
   group: Others
   icon: server
   label: Dnsmasq

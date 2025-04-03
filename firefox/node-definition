@@ -86,6 +86,8 @@ boot:
     - READY
   uses_regex: false
 ui:
+  description: |
+    Firefox browser {{CMLNODEDEFVERSION}}
   group: Others
   icon: host
   label: Firefox

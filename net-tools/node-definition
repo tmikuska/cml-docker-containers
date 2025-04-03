@@ -96,7 +96,7 @@ boot:
     - READY
 ui:
   description: |2-
-    Networking tools node
+    Networking tools node {{CMLNODEDEFVERSION}}
   group: Others
   icon: server
   label: Net-Tools

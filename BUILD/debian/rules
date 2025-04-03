@@ -1,0 +1,53 @@
+#!/usr/bin/make -f
+# See debhelper(7) (uncomment to enable)
+# output every command that modifies files on the build system.
+export DH_VERBOSE = 1
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	# Skip the build phase since files are already in place
+
+override_dh_auto_install:
+	# Skip the install phase since files are already in place
+
+override_dh_prep:
+	# Skip prep to preserve existing files
+
+override_dh_compress:
+	# Skip compression
+
+override_dh_fixperms:
+	# Skip permission fixing if not needed
+
+override_dh_strip:
+	# Skip stripping debug symbols
+
+override_dh_makeshlibs:
+	# Skip shared library processing
+
+override_dh_shlibdeps:
+	# Skip shared library dependency calculation
+
+override_dh_md5sums:
+	# Skip md5sum generation for faster builds
+
+override_dh_clean:
+	# Skip cleaning to preserve existing files
+
+# see FEATURE AREAS in dpkg-buildflags(1)
+#export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+#export DEB_BUILD_OPTIONS = nostrip
+
+# see ENVIRONMENT in dpkg-buildflags(1)
+# package maintainers to append CFLAGS
+#export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
+# package maintainers to append LDFLAGS
+#export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+# dh_make generated override targets
+# This is example for Cmake (See https://bugs.debian.org/641051 )
+#override_dh_auto_configure:
+#	dh_auto_configure -- \
+#	-DCMAKE_LIBRARY_PATH=$(DEB_HOST_MULTIARCH)

@@ -71,6 +71,8 @@ boot:
     - Ansible playbook complete,
   uses_regex: false
 ui:
+  description: |
+    Splunk Enterprise server {{CMLNODEDEFVERSION}}
   group: Others
   icon: host
   label: Splunk

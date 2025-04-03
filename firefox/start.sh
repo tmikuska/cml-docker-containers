@@ -1,20 +1,22 @@
 #!/bin/bash
 
+# Function to check if a URL is reachable
 function check() {
-    URL="$1"
-    MAX_RETRIES=10
-    TIMEOUT=1
-    attempt=0
+    local url="$1"
+    local max_retries=10
+    local timeout=1
+    local attempt=0
 
-    if [ -z "$URL" ]; then
-        exit 1
+    if [ -z "$url" ]; then
+        echo "No URL provided."
+        return 1
     fi
 
-    echo "Check and wait for $URL to become available..."
+    echo "Checking and waiting for $url to become available..."
 
-    while [ $attempt -lt $MAX_RETRIES ]; do
-        attempt=$((attempt + 1))
-        response=$(curl --silent --head --max-time $TIMEOUT --write-out "%{http_code}" --output /dev/null "$URL")
+    while [ $attempt -lt $max_retries ]; do
+        ((attempt++))
+        response=$(curl --location --silent --head --max-time "$timeout" --write-out "%{http_code}" --output /dev/null "$url")
         curl_exit_code=$?
         if [ $curl_exit_code -ne 0 ]; then
             if [ $curl_exit_code -eq 28 ]; then
@@ -31,17 +33,19 @@ function check() {
         sleep 1
     done
 
+    echo "Failed to retrieve URL after $max_retries attempts."
     return 1
 }
 
-if ! check $HOME_URL; then
+# Check and wait for HOME_URL
+if ! check "$HOME_URL"; then
     HOME_URL=""
 fi
 
-# optional wait
+# Optional wait based on WAIT variable
 case "$WAIT" in
     '' | *[!0-9]*)
-        # Not a number, do nothing
+        # WAIT is not a number, do nothing
         ;;
     *)
         if [ "$WAIT" -gt 0 ]; then
@@ -50,16 +54,26 @@ case "$WAIT" in
         ;;
 esac
 
+# start dbus
+dbus-daemon --nosyslog --fork --session --address=unix:path=$HOME/.dbus-socket
+export DBUS_SESSION_BUS_ADDRESS=unix:path=$HOME/.dbus-socket
+
 # start i3 and Firefox
 /usr/bin/i3 &
-/usr/bin/firefox $HOME_URL &
 
-# wait for firefox window
+cd $HOME
+/usr/bin/firefox &>firefox.log $HOME_URL &
+
+# wait for Firefox window
 while ! xdotool search --name "Firefox"; do
     sleep 1
 done
 
+# for the "boot ready" logic
+echo "READY" >/dev/console
+
 # send fullscreen command to i3
+sleep 2
 i3-msg fullscreen
 
 # wait for Firefox to exit

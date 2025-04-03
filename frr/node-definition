@@ -20,7 +20,8 @@ configuration:
               "image": "{{IMAGENAMETAG}}",
               "mounts": [
                 "type=bind,source=cfg/boot.sh,target=/config/boot.sh",
-                "type=bind,source=cfg/node.cfg,target=/config/node.cfg"
+                "type=bind,source=cfg/node.cfg,target=/config/node.cfg",
+                "type=bind,source=cfg/protocols,target=/config/protocols"
               ],
               "caps": [
                 "CAP_CHOWN",
@@ -86,19 +87,34 @@ configuration:
       - name: boot.sh
         editable: true
         content: |
-          # Enable specific routing protocols here:
-          #
-          sed -r -e 's/^(ospfd=)no$/\1yes/' -i /etc/frr/daemons
-          # sed -r -e 's/^(bgpd=)no$/\1yes/' -i /etc/frr/daemons
-          # sed -r -e 's/^(eigrpd=)no$/\1yes/' -i /etc/frr/daemons
-          #
           # insert more commands here
           # ip address add dev eth1 10.0.0.1/24
           # ip link set dev eth1 up
-          #
-          # keep the next line to indicate that the machine is ready
-          echo "READY" >/dev/console
           exit 0
+      - name: protocols 
+        editable: true
+        content: |
+          # enable / disable needed routing protocols by adding / removing
+          # the hashmark in front of the lines below
+          #
+          # bgpd
+          ospfd
+          # ospf6d
+          # ripd
+          ripngd
+          # isisd
+          # pimd
+          # pim6d
+          # ldpd
+          # nhrpd
+          eigrpd
+          # babeld
+          # sharpd
+          # pbrd
+          # bfdd
+          # fabricd
+          # vrrpd
+          # pathd
 device:
   interfaces:
     has_loopback_zero: false
@@ -161,7 +177,7 @@ schema_version: 0.0.1
 sim:
   linux_native:
     cpus: 1
-    ram: 512
+    ram: 256
     driver: server
     libvirt_domain_driver: docker
 boot:
@@ -173,8 +189,8 @@ pyats:
   series: iosv
   config_extract_command: show run
 ui:
-  description: |2-
-    Free Range Routing (frr)
+  description: |
+    Free Range Routing (frr) {{CMLNODEDEFVERSION}}
   group: Others
   icon: router
   label: FRR

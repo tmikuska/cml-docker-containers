@@ -1,6 +1,10 @@
 .PHONY: all
 all: build
 
+# the name of our package
+PKG := refplat-images-docker
+export PKG
+
 include vars.mk
 include ../templates/definitions.mk
 

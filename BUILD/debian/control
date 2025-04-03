@@ -1,0 +1,19 @@
+Section: unknown
+Priority: optional
+Maintainer: Ralph Schmieder <rschmied@cisco.com>
+Build-Depends: debhelper-compat (= 12)
+Standards-Version: 4.6.0
+Homepage: https://www.cisco.com/go/cml
+#Vcs-Browser: https://salsa.debian.org/debian/iol-tools
+#Vcs-Git: https://salsa.debian.org/debian/iol-tools.git
+Rules-Requires-Root: no
+Source: refplat-images-docker
+
+Package: refplat-images-docker
+Architecture: amd64
+# Build-Depends: any
+# Depends: ${shlibs:Depends}, ${misc:Depends} cml2
+Depends: cml2
+Description: CML2 Docker reference platforms
+ A set of Docker images and their associated node and image definitions for
+ CML2 version 2.9 and newer.
