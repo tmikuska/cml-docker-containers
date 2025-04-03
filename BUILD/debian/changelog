@@ -1,4 +1,12 @@
-refplat-images-docker (1.1) UNRELEASED; urgency=medium
+refplat-images-docker (1.2) UNRELEASED; urgency=medium
+
+  * fixes to various containers
+    memory setting, node def version
+  * leave resulting container images compressed
+
+ -- Ralph Schmieder <rschmied@cisco.com>  Thu, 03 Apr 2025 12:06:44 +0200
+
+refplat-images-docker (1.1) unstable; urgency=medium
 
   * Initial release.
 

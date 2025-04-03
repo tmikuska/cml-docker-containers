@@ -109,7 +109,7 @@ schema_version: 0.0.1
 sim:
   linux_native:
     cpus: 1
-    ram: 1024
+    ram: 512
     driver: server
     libvirt_domain_driver: docker
 boot:

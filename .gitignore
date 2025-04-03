@@ -5,3 +5,6 @@ refplat-images-docker*.changes
 refplat-images-docker*.buildinfo
 BUILD/debian/.debhelper
 BUILD/debian/refplat-images-docker
+BUILD/debian/refplat-images-docker.substvars
+BUILD/debian/debhelper-build-stamp
+BUILD/debian/files
