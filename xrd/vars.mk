@@ -1,4 +1,5 @@
-VERSION      := 24.2.2
+VERSION      := 24.4.2
 NAME         := xrd
-DESCR        := Cisco IOS XRd
 IMAGENAMETAG := ios-xr/xrd-control-plane:$(VERSION)
+DESC         := Cisco IOS XRd
+FULLDESC     := $(DESC) Router platform (control plane) $(VERSION)

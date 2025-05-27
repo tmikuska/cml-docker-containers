@@ -1,6 +1,6 @@
 #
-# IOS XRd node definition
-# generated 2025-04-01
+# {{DESC}} node definition
+# generated {{DATE}}
 # part of VIRL^2
 #
 
@@ -173,9 +173,9 @@ inherited:
     data_volume: false
     boot_disk_size: false
 general:
-  description: Cisco IOS XRd (Docker)
+  description: {{DESC}} (Docker)
   nature: router
-  read_only: false
+  read_only: true
 schema_version: 0.0.1
 sim:
   linux_native:
@@ -195,7 +195,7 @@ pyats:
   config_extract_command: show running-config
 ui:
   description: |
-    Cisco IOS xrd Router platform (control plane) {{CMLNODEDEFVERSION}}
+    {{FULLDESC}}
   group: Cisco
   icon: router
   label: IOS XRd

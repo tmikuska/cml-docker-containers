@@ -1,4 +1,5 @@
-VERSION      := 135.0.7049.52-1
+VERSION      := 136.0.7103.113-1
 NAME         := chrome
 IMAGENAMETAG := $(NAME):$(VERSION)
-DESCR        :=Google Chrome Stable
+DESC         := Google Chrome stable
+FULLDESC     := $(DESC) $(VERSION)

@@ -1,6 +1,6 @@
 #
-# dnsmasq node definition
-# generated 2025-04-01
+# {{DESC}} node definition
+# generated {{DATE}}
 # part of VIRL^2
 #
 
@@ -773,7 +773,7 @@ inherited:
     data_volume: false
     boot_disk_size: false
 general:
-  description: Dnsmasq server
+  description: {{DESC}} (Docker)
   nature: server
   read_only: true
 schema_version: 0.0.1
@@ -783,13 +783,14 @@ sim:
     ram: 512
     driver: server
     libvirt_domain_driver: docker
+    cpu_limit: 100
 boot:
   timeout: 30
   completed:
     - READY
 ui:
-  description:
-    Dnsmasq server (DHCP, DNS, TFTP) {{CMLNODEDEFVERSION}}
+  description: |
+    {{FULLDESC}}
   group: Others
   icon: server
   label: Dnsmasq

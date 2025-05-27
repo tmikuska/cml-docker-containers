@@ -24,3 +24,8 @@ deb:
 	cd BUILD && dpkg-buildpackage --build=binary --no-sign --no-check-builddeps
 	# dpkg-buildpackage --build=binary --no-sign --no-check-builddeps
 	# cd BUILD; dpkg-deb --build -Znone refplat-images-docker_all
+
+definitions:
+	for dir in $(SUBDIRS); do \
+		$(MAKE) -C $$dir definitions; \
+	done

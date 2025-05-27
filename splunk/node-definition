@@ -1,3 +1,9 @@
+#
+# {{DESC}} node definition
+# generated {{DATE}}
+# part of VIRL^2
+#
+
 id: splunk
 sim:
   linux_native:
@@ -21,8 +27,8 @@ inherited:
     boot_disk_size: false
 general:
   nature: host
-  description: Splunk
-  read_only: false
+  description: {{DESC}} (Docker)
+  read_only: true
 schema_version: 0.0.1
 configuration:
   generator:
@@ -68,11 +74,10 @@ device:
 boot:
   timeout: 60
   completed:
-    - Ansible playbook complete,
-  uses_regex: false
+    - Ansible playbook complete
 ui:
   description: |
-    Splunk Enterprise server {{CMLNODEDEFVERSION}}
+    {{FULLDESC}}
   group: Others
   icon: host
   label: Splunk
