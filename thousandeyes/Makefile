@@ -23,5 +23,5 @@ build: $(DNT) $(NDEF)
 	  echo "required file missing, see README"; \
 		exit 1; \
 	fi
-	rm -f $(DNT)/$(NTAG).img.gz
-	mv $(IMG) $(DNT)/$(NTAG).img.gz
+	rm -f $(DNT)/$(NTAG).tar.gz
+	mv $(IMG) $(DNT)/$(NTAG).tar.gz

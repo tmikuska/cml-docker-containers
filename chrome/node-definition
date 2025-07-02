@@ -1,3 +1,9 @@
+#
+# {{DESC}} node definition
+# generated {{DATE}}
+# part of VIRL^2
+#
+
 id: chrome
 sim:
   linux_native:
@@ -23,8 +29,8 @@ inherited:
     boot_disk_size: false
 general:
   nature: host
-  description: "Google Chrome stable"
-  read_only: false
+  description: {{DESC}} (Docker)
+  read_only: true
 schema_version: 0.0.1
 configuration:
   generator:
@@ -84,10 +90,9 @@ boot:
   timeout: 30
   completed:
     - READY
-  uses_regex: false
 ui:
   description: |
-    Google Chrome stable {{CMLNODEDEFVERSION}}
+    {{FULLDESC}}
   group: Others
   icon: host
   label: Chrome

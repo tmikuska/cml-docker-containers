@@ -16,7 +16,7 @@ clean:
 .PHONY: docker
 docker: Dockerfile $(DNT)
 	docker buildx build . -t $(NAME):$(TAG) --build-arg uid=2000 --build-arg version=$(VERSION)
-	docker save $(NAME):$(TAG) | gzip - >$(DNT)/$(NTAG).img.gz
+	docker save $(NAME):$(TAG) | gzip - >$(DNT)/$(NTAG).tar.gz
 
 .PHONY: build
 build: docker definitions

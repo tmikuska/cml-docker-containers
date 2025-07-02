@@ -1,3 +1,9 @@
+#
+# {{DESC}} node definition
+# generated {{DATE}}
+# part of VIRL^2
+#
+
 id: nginx
 sim:
   linux_native:
@@ -21,8 +27,8 @@ inherited:
     boot_disk_size: false
 general:
   nature: server
-  description: Nginx (Docker)
-  read_only: false
+  description: {{DESC}} (Docker)
+  read_only: true
 schema_version: 0.0.1
 configuration:
   generator:
@@ -92,7 +98,7 @@ pyats:
   os: linux
 ui:
   description: |
-    Nginx web server {{CMLNODEDEFVERSION}}
+    {{FULLDESC}}
   group: Others
   icon: server
   label: Nginx

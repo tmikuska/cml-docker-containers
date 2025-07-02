@@ -1,13 +1,13 @@
 #
-# syslog node definition
-# generated 2025-04-01
+# {{DESC}} node definition
+# generated {{DATE}}
 # part of VIRL^2
 #
 
 id: syslog
 configuration:
   generator:
-    driver: server
+    driver: null
   provisioning:
     volume_name: cfg
     media_type: raw
@@ -63,7 +63,6 @@ configuration:
               destination(d_stdout);
               destination(d_local);
           };
-
       - name: boot.sh
         editable: true
         content: |
@@ -101,7 +100,7 @@ inherited:
     data_volume: false
     boot_disk_size: false
 general:
-  description: Syslog NG server
+  description: {{DESC}} (Docker)
   nature: server
   read_only: true
 schema_version: 0.0.1
@@ -111,13 +110,14 @@ sim:
     ram: 512
     driver: server
     libvirt_domain_driver: docker
+    cpu_limit: 100
 boot:
   timeout: 30
   completed:
     - READY
 ui:
   description: |
-    Syslog NG server {{CMLNODEDEFVERSION}}
+    {{FULLDESC}}
   group: Others
   icon: server
   label: Syslog

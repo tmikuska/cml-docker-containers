@@ -1,6 +1,6 @@
 #
-# net-tools node definition
-# generated 2025-04-01
+# {{DESC}} node definition
+# generated {{DATE}}
 # part of VIRL^2
 #
 
@@ -51,6 +51,7 @@ configuration:
           #
           # keep the next line to indicate that the machine is ready
           echo "READY" >/dev/console
+          cat /etc/motd
           exit 0
 device:
   interfaces:
@@ -79,7 +80,7 @@ inherited:
     data_volume: false
     boot_disk_size: false
 general:
-  description: Networking tools node
+  description: {{DESC}} (Docker)
   nature: server
   read_only: true
 schema_version: 0.0.1
@@ -89,13 +90,14 @@ sim:
     ram: 512
     driver: server
     libvirt_domain_driver: docker
+    cpu_limit: 100
 boot:
   timeout: 30
   completed:
     - READY
 ui:
   description: |
-    Networking tools node {{CMLNODEDEFVERSION}}
+    {{FULLDESC}}
   group: Others
   icon: server
   label: Net-Tools

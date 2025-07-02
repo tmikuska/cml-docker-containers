@@ -1,13 +1,13 @@
 #
-# tacplus node definition
-# generated 2024-10-32
+# {{DESC}} node definition
+# generated {{DATE}}
 # part of VIRL^2
 #
 
 id: tacplus
 configuration:
   generator:
-    driver: server
+    driver: null
   provisioning:
     volume_name: cfg
     media_type: raw
@@ -98,7 +98,7 @@ inherited:
     data_volume: false
     boot_disk_size: false
 general:
-  description: Tacacs plus
+  description: {{DESC}} (Docker)
   nature: server
   read_only: true
 schema_version: 0.0.1
@@ -108,13 +108,14 @@ sim:
     ram: 512
     driver: server
     libvirt_domain_driver: docker
+    cpu_limit: 100
 boot:
   timeout: 30
   completed:
     - READY
 ui:
   description: |
-    Tacacs plus server {{CMLNODEDEFVERSION}}
+    {{FULLDESC}}
   group: Others
   icon: server
   label: TacPlus

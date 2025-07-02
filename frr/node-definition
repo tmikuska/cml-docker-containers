@@ -1,6 +1,6 @@
 #
-# frr node definition
-# generated 2025-04-01
+# {{DESC}} node definition
+# generated {{DATE}}
 # part of VIRL^2
 #
 
@@ -170,7 +170,7 @@ inherited:
     data_volume: false
     boot_disk_size: false
 general:
-  description: Free Range Routing (frr)
+  description: {{DESC}} (Docker)
   nature: router
   read_only: true
 schema_version: 0.0.1
@@ -180,6 +180,7 @@ sim:
     ram: 256
     driver: server
     libvirt_domain_driver: docker
+    cpu_limit: 100
 boot:
   timeout: 30
   completed:
@@ -190,7 +191,7 @@ pyats:
   config_extract_command: show run
 ui:
   description: |
-    Free Range Routing (frr) {{CMLNODEDEFVERSION}}
+    {{FULLDESC}}
   group: Others
   icon: router
   label: FRR
