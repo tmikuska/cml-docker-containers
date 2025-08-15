@@ -4,7 +4,7 @@
 # part of VIRL^2
 #
 
-id: dnsmasq
+id: {{NAME}}
 configuration:
   generator:
     driver: server

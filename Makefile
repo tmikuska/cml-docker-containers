@@ -12,11 +12,11 @@ $(SUBDIRS):
 # 	done
 
 clean:
-	# for dir in $(SUBDIRS); do \
-	# 		$(MAKE) -C $$dir clean; \
-	# done
-	# rm -rf debian/refplat-images-docker
-	# dh_clean
+	for dir in $(SUBDIRS); do \
+			$(MAKE) -C $$dir clean; \
+	done
+	rm -rf debian/refplat-images-docker
+	cd BUILD && dh_clean
 
 .PHONY: all build clean $(SUBDIRS)
 

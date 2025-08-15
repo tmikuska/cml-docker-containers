@@ -1,5 +1,4 @@
-VERSION      := 138.0.4~build1
+VERSION      := 141.0.3~build1
 NAME         := firefox
-IMAGENAMETAG := $(NAME):138.0.4-build1
-DESC         := Firefox
-FULLDESC     := $(DESC) browser $(VERSION)
+DESCR        := Firefox
+FULLDESC     := $(DESC) $(VERSION)

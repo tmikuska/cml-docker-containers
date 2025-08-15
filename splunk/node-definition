@@ -4,7 +4,7 @@
 # part of VIRL^2
 #
 
-id: splunk
+id: {{NAME}}
 sim:
   linux_native:
     driver: ubuntu
