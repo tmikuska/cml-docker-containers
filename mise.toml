@@ -1,2 +1,5 @@
 [env]
 DEBEMAIL = "Ralph Schmieder <rschmied@cisco.com>"
+
+[tools]
+go = "latest"

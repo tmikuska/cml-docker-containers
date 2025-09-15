@@ -6,24 +6,17 @@ all: $(SUBDIRS)
 $(SUBDIRS):
 	$(MAKE) -C $@
 
-# build:
-# 	for dir in $(SUBDIRS); do \
-# 			$(MAKE) -C $$dir build; \
-# 	done
-
 clean:
-	# for dir in $(SUBDIRS); do \
-	# 		$(MAKE) -C $$dir clean; \
-	# done
-	# rm -rf debian/refplat-images-docker
-	# dh_clean
+	for dir in $(SUBDIRS); do \
+			$(MAKE) -C $$dir clean; \
+	done
+	rm -rf debian/refplat-images-docker
+	cd BUILD && dh_clean
 
 .PHONY: all build clean $(SUBDIRS)
 
 deb:
 	cd BUILD && dpkg-buildpackage --build=binary --no-sign --no-check-builddeps
-	# dpkg-buildpackage --build=binary --no-sign --no-check-builddeps
-	# cd BUILD; dpkg-deb --build -Znone refplat-images-docker_all
 
 definitions:
 	for dir in $(SUBDIRS); do \

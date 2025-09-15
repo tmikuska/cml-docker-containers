@@ -18,10 +18,6 @@ IMG := te-ea.tgz
 .PHONY: build
 build: $(DNT) $(NDEF)
 	docker pull thousandeyes/enterprise-agent:latest-agent
-	docker save thousandeyes/enterprise-agent:latest-agent | gzip - >$(IMG)
-	@if ! [ -f $(IMG) ]; then \
-	  echo "required file missing, see README"; \
-		exit 1; \
-	fi
-	rm -f $(DNT)/$(NTAG).tar.gz
-	mv $(IMG) $(DNT)/$(NTAG).tar.gz
+	docker tag  thousandeyes/enterprise-agent:latest-agent $(NAME):$(TAG)
+	docker save $(NAME):$(TAG) | gzip - >$(IMG)
+	mv -f $(IMG) $(DNT)/$(NTAG).tar.gz

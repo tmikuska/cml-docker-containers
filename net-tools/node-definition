@@ -4,7 +4,7 @@
 # part of VIRL^2
 #
 
-id: net-tools
+id: {{NAME}}
 configuration:
   generator:
     driver: server

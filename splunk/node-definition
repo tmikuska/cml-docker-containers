@@ -4,7 +4,7 @@
 # part of VIRL^2
 #
 
-id: splunk
+id: {{NAME}}
 sim:
   linux_native:
     driver: ubuntu
@@ -62,6 +62,7 @@ configuration:
       - name: environment
         editable: true
         content: |-
+          SPLUNK_GENERAL_TERMS=--accept-sgt-current-at-splunk-com
           SPLUNK_START_ARGS=--accept-license
           SPLUNK_PASSWORD=Cisc0123#
 device:

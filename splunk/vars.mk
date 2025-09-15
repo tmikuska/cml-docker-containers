@@ -1,5 +1,4 @@
-VERSION      := 9.4
+VERSION      := 10.0
 NAME         := splunk
-IMAGENAMETAG := $(NAME):$(VERSION)
 DESC         := Splunk Enterprise
 FULLDESC     := $(DESC) $(VERSION)

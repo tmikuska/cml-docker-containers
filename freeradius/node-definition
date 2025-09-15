@@ -4,7 +4,7 @@
 # part of VIRL^2
 #
 
-id: radius
+id: {{NAME}}
 configuration:
   generator:
     driver: server
@@ -20,7 +20,6 @@ configuration:
               "image": "{{IMAGENAMETAG}}",
               "mounts": [
                 "type=bind,source=cfg/boot.sh,target=/boot.sh",
-                "type=bind,source=cfg/clients.conf,target=/etc/freeradius/3.0/clients.conf",
                 "type=bind,source=cfg/radiusd.conf,target=/etc/freeradius/3.0/radiusd.conf",
                 "type=bind,source=cfg/users,target=/etc/freeradius/3.0/mods-config/files/authorize"
               ]
@@ -29,41 +28,116 @@ configuration:
             "day0cmd": [ "/bin/bash", "/boot.sh" ],
             "busybox": true
           }
-      - name: clients.conf
-        editable: true
-        content: |
-          client localhost {
-              ipaddr = 127.0.0.1
-              secret = testing123
-              require_message_authenticator = no
-              nas_type = other
-          }
       - name: radiusd.conf
         editable: true
         content: |
+          # Basic freeRADIUS onfiguration
+
+          prefix = /usr
+          exec_prefix = /usr
+          sysconfdir = /etc
+          localstatedir = /var
+          sbindir = ${exec_prefix}/sbin
+          logdir = /var/log/freeradius
+          raddbdir = /etc/freeradius/3.0
+          radacctdir = ${logdir}/radacct
+          name = freeradius
+          confdir = ${raddbdir}
+          modconfdir = ${confdir}/mods-config
+          certdir = ${confdir}/certs
+          cadir   = ${confdir}/certs
+          run_dir = ${localstatedir}/run/${name}
+          db_dir = ${raddbdir}
+          libdir = /usr/lib/freeradius
+          pidfile = ${run_dir}/${name}.pid
+          max_request_time = 30
+          cleanup_delay = 5
+          max_requests = 16384
+          hostname_lookups = no
+
           log {
-              # Send all log messages to stdout
-              destination = stdout
+              destination = syslog
+              colourise = yes
+              file = ${logdir}/radius.log
+              syslog_facility = daemon
+              stripped_names = no
+              auth = yes
+              auth_reject = yes
+              auth_badpass = yes
+              auth_goodpass = yes
+              msg_denied = "You are already logged in - access denied"
           }
 
-          listen {
-              type = auth
-              ipaddr = *
-              port = 1812
+          checkrad = ${sbindir}/checkrad
+
+          #ENV {
+          #}
+
+          security {
+              user = freerad
+              group = freerad
+              allow_core_dumps = no
+              max_attributes = 200
+              reject_delay = 1
+              status_server = yes
           }
+
+          proxy_requests = no
+          #$INCLUDE proxy.conf
+
+          #$INCLUDE clients.conf
+          client all-devices {
+              ipaddr = *
+              secret = geheim
+              require_message_authenticator = no
+              nas_type = cisco
+          }
+
+          thread pool {
+              start_servers = 5
+              max_servers = 32
+              min_spare_servers = 3
+              max_spare_servers = 10
+              max_requests_per_server = 0
+              auto_limit_acct = no
+          }
+
+          modules {
+              $INCLUDE mods-enabled/
+          }
+
+          #instantiate {
+          #}
+
+          policy {
+              $INCLUDE policy.d/
+          }
+
+          $INCLUDE sites-enabled/
       - name: users
         editable: true
         content: |
+          # https://wiki.freeradius.org/guide/Basic-configuration-HOWTO
+          # https://github.com/FreeRADIUS/freeradius-server/blob/v3.0.x/raddb/mods-config/files/authorize
           testuser Cleartext-Password := "testpassword"
+      - name: environment
+        content: |-
+          # Create additional environment variables
+          # run freeradius with -X (for debugging)
+          # be sure to use no quotes around the string (even if it contains
+          # spaces)!
+          #
+          # A copy of the logfile can be found in /var/log/freeradius
+          #
+          # ARGS=-f -lstdout
+          # ARGS=-X
+        editable: true
       - name: boot.sh
         editable: true
         content: |
           # insert more commands here
-          # ip address add dev eth1 10.0.0.1/24
-          # ip link set dev eth1 up
-          #
-          # keep the next line to indicate that the machine is ready
-          echo "READY" >/dev/console
+          # ip address add dev eth0 10.0.0.1/24
+          # ip link set dev eth0 up
           exit 0
       - name: mounts
         content: |-
@@ -116,7 +190,7 @@ sim:
 boot:
   timeout: 30
   completed:
-    - READY
+    - Ready to process requests
 ui:
   description: |
     {{FULLDESC}}
