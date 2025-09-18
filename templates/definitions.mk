@@ -17,7 +17,7 @@ definitions: $(DNT) $(NDEF)
 		-e 's/{{TAG}}/$(TAG)/g' \
 		-e 's/{{NTAG}}/$(NTAG)/g' \
 		-e "s/{{SHA256}}/$$sha256/g" \
-	    -e "s/{{DATE}}/$$date/" \
+		-e "s/{{DATE}}/$$date/" \
 	>$(DNT)/$(NTAG).yaml && \
 	cat node-definition | sed \
 		-e 's/{{NAME}}/$(NAME)/g' \
