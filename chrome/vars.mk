@@ -1,4 +1,4 @@
-VERSION      := 139.0.7258.127-1
+VERSION      := $(shell ./get_latest_version.sh)
 NAME         := chrome
 DESC         := Google Chrome stable
 FULLDESC     := $(DESC) $(VERSION)

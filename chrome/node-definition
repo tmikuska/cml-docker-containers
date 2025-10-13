@@ -10,7 +10,7 @@ sim:
     driver: ubuntu
     libvirt_domain_driver: docker
     cpus: 1
-    ram: 4096
+    ram: 2048
     video:
       memory: 1
     cpu_limit: 100

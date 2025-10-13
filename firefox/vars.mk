@@ -1,4 +1,4 @@
-VERSION      := 141.0.3~build1
+VERSION      := $(shell ./get_latest_version.sh)
 NAME         := firefox
-DESCR        := Firefox
+DESC         := Firefox
 FULLDESC     := $(DESC) $(VERSION)
