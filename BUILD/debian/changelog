@@ -1,27 +1,40 @@
 refplat-images-docker (0.1.8) unstable; urgency=medium
 
   * CI / release: workflow guard and logging
-    - Run metadata guard only for downstream `workflow_run` events to avoid unnecessary checks on tag/manual runs
-    - Add explicit log steps for tag pushes and manual `workflow_dispatch` runs for clearer diagnostics and accurate logging
-    - Install `jq` with `DEBIAN_FRONTEND=noninteractive` and `--no-install-recommends`; clean apt lists and documentation paths to reduce runner bloat
-    - Prefer the pushed git tag when creating Releases; implement a robust tag-selection order and sanity checks to avoid malformed `tag_name` errors
+    - Run metadata guard only for downstream `workflow_run` events to avoid
+    unnecessary checks on tag/manual runs
+    - Add explicit log steps for tag pushes and manual `workflow_dispatch`
+    runs for clearer diagnostics and accurate logging
+    - Install `jq` with `DEBIAN_FRONTEND=noninteractive` and
+    `--no-install-recommends`; clean apt lists and documentation paths to
+    reduce runner bloat
+    - Prefer the pushed git tag when creating Releases; implement a robust
+    tag-selection order and sanity checks to avoid malformed `tag_name` errors
 
   * Automation: tagging helper
-    - Added `tag-release.sh` to help select a successful `build.yml` run and create an annotated (optionally signed) tag that points at the built commit
+    - Added `tag-release.sh` to help select a successful `build.yml` run and
+    create an annotated (optionally signed) tag that points at the built
+    commit
 
   * Documentation
-    - Added `TAGGING.md` describing how to create tags that match CI build runs
-    - Added `VERIFICATION.md` with instructions for importing the project public key and verifying detached GPG signatures for release artifacts
+    - Added `TAGGING.md` describing how to create tags that match CI build
+    runs
+    - Added `VERIFICATION.md` with instructions for importing the project
+    public key and verifying detached GPG signatures for release artifacts
 
-  -- Ralph Schmieder <rschmied@cisco.com>  Tue, 14 Oct 2025 12:38:50 +0200
+ -- Ralph Schmieder <rschmied@cisco.com>  Tue, 14 Oct 2025 12:38:50 +0200
 
 refplat-images-docker (0.1.7) unstable; urgency=medium
 
   * CI / release: split workflows and signing improvements
-    - Split build and release workflows: build job produces artifacts; release job downloads, signs, and publishes them
-    - Import GPG key and create detached ASCII signatures for artifacts (*.asc); attempt Debian-style signing of .changes with debsign
-    - Ensure gh CLI is available and use `gh release upload` to attach multiple files, including signatures
-    - Upload artifacts and signatures to GitHub Release; improved artifact upload robustness and metadata handling
+    - Split build and release workflows: build job produces artifacts; release
+    job downloads, signs, and publishes them
+    - Import GPG key and create detached ASCII signatures for artifacts
+    (*.asc); attempt Debian-style signing of .changes with debsign
+    - Ensure gh CLI is available and use `gh release upload` to attach
+    multiple files, including signatures
+    - Upload artifacts and signatures to GitHub Release; improved artifact
+    upload robustness and metadata handling
   * Build metadata
     - Restore timestamp (ts) in build-metadata.json for traceability
   * Packaging
@@ -38,7 +51,8 @@ refplat-images-docker (0.1.6) unstable; urgency=medium
   * Set platform to x86_64 for Docker builds to improve cross-host consistency
   * Documentation and repository cleanup
     - Added a compose section to README.md
-    - Multiple README and docs updates and cleanups to reflect new workflow and artifact formats
+    - Multiple README and docs updates and cleanups to reflect new workflow
+    and artifact formats
     - Renamed/normalized artifact naming to use .tar.gz where appropriate
 
  -- Ralph Schmieder <rschmied@cisco.com>  Mon, 13 Oct 2025 22:15:20 +0200
