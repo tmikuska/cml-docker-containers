@@ -80,7 +80,7 @@ jobs:
           echo "Artifacts in ./artifacts:"
           ls -la artifacts || true
 
-      - name: Guard: ensure build was tag-triggered (auto path)
+      - name: "Guard: ensure build was tag-triggered (auto path)"
         run: |
           set -euo pipefail
           if [ "${{ github.event_name }}" = "workflow_run" ]; then
@@ -88,7 +88,12 @@ jobs:
               echo "No build-metadata.json found; skipping release."
               exit 0
             fi
-            REF=$(python3 -c "import json,sys; print(json.load(open('artifacts/build-metadata.json')).get('ref',''))")
+            if ! command -v jq >/dev/null 2>&1; then
+              echo "jq not found - installing"
+              sudo apt-get update
+              sudo apt-get install -y jq
+            fi
+            REF=$(jq -r '.ref // empty' artifacts/build-metadata.json || true)
             echo "Build metadata ref=${REF}"
             case "$REF" in
               refs/tags/*) echo "Build was triggered by tag ${REF#refs/tags/}" ;;
