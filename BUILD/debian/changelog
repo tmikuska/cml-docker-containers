@@ -1,4 +1,4 @@
-refplat-images-docker (1.7) unstable; urgency=medium
+refplat-images-docker (0.1.7) unstable; urgency=medium
 
   * CI / release: split workflows and signing improvements
     - Split build and release workflows: build job produces artifacts; release job downloads, signs, and publishes them
