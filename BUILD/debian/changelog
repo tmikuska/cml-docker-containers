@@ -1,3 +1,17 @@
+refplat-images-docker (1.7) unstable; urgency=medium
+
+  * CI / release: split workflows and signing improvements
+    - Split build and release workflows: build job produces artifacts; release job downloads, signs, and publishes them
+    - Import GPG key and create detached ASCII signatures for artifacts (*.asc); attempt Debian-style signing of .changes with debsign
+    - Ensure gh CLI is available and use `gh release upload` to attach multiple files, including signatures
+    - Upload artifacts and signatures to GitHub Release; improved artifact upload robustness and metadata handling
+  * Build metadata
+    - Restore timestamp (ts) in build-metadata.json for traceability
+  * Packaging
+    - Fixed changelog formatting to comply with dpkg tools
+
+ -- Ralph Schmieder <rschmied@cisco.com>  Tue, 14 Oct 2025 12:00:00 +0200
+
 refplat-images-docker (1.6) unstable; urgency=medium
 
   * CI / release workflow and Makefile improvements
