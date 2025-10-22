@@ -8,10 +8,10 @@ $(SUBDIRS):
 
 clean:
 	for dir in $(SUBDIRS); do \
-			$(MAKE) -C $$dir clean; \
+		$(MAKE) -C $$dir clean; \
 	done
-	rm -rf debian/refplat-images-docker
-	cd BUILD && dh_clean
+	@rm -rf debian/refplat-images-docker
+	@cd BUILD && ( command -v dh_clean >/dev/null 2>&1 && dh_clean || true )
 
 .PHONY: all build clean $(SUBDIRS)
 

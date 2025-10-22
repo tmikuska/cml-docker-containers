@@ -15,7 +15,7 @@ definitions: $(DNT) $(NDEF)
 			echo "Image $(NAME):$(TAG) not found; skipping definitions"; \
 		else \
 			date=$$(date +"%Y-%m-%d") && \
-			cat ../templates/image-definition | sed \
+			cat ../templates/image-definition.tmpl | sed \
 				-e 's/{{DESC}}/$(DESC)/g' \
 				-e 's/{{FULLDESC}}/$(FULLDESC)/g' \
 				-e 's/{{NAME}}/$(NAME)/g' \

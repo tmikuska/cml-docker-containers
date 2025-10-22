@@ -97,7 +97,7 @@ make deb
 
 **Notes:**
 
-- Per-container Makefiles usually soft-link to  `../templates/makefile`. Use an existing container (for example `chrome/` or `nginx/`) as a template when adding a new container.
+- Per-container Makefiles usually soft-link to  `../templates/build.mk`. Use an existing container (for example `chrome/` or `nginx/`) as a template when adding a new container.
 - If a `.disabled` file exists in a container directory, `make -C <dir>` will skip building that container and print a message.
 
 ## Results (what is produced & where)
@@ -121,7 +121,7 @@ Minimum directory layout (required files)
 ```plain
 mycontainer/
   Dockerfile                 # required for discovery
-  Makefile                   # usually: soft-link to ../templates/makefile
+  Makefile                   # usually: soft-link to ../templates/build.mk
   vars.mk                    # required metadata (see below)
   node-definition            # required: template used for node YAML
 ```
@@ -140,7 +140,7 @@ FULLDESC=Longer, user-facing description
 Requirements and recommendations
 
 - `Dockerfile` must exist for discovery.
-- Prefer to `include ../templates/makefile` in your `Makefile` unless you have specialized needs.
+- Prefer to `include ../templates/build.mk` in your `Makefile` unless you have specialized needs.
 - Output expectations:
   - Image tarball (e.g., `$(NTAG).tar.gz`) must appear under `BUILD/debian/refplat-images-docker/var/lib/libvirt/images/...`.
   - Definition YAMLs must be generated into that same area.
@@ -267,7 +267,7 @@ Splunk images are large and disabled by default. Consider keeping Splunk out of 
 ```plain
 mycontainer/
   Dockerfile
-  Makefile (soft-link to ../templates/makefile)
+  Makefile (soft-link to ../templates/build.mk)
   vars.mk
   node-definition
 ```

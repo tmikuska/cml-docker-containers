@@ -11,11 +11,7 @@ NO_PROXY=
 
 include vars.mk
 include ../templates/definitions.mk
-
-.PHONY: clean
-clean:
-	rm -rf $(DNT)
-	-docker image ls --format "{{ .ID }}" $(NAME) | uniq | xargs docker image rm -f
+include ../templates/clean.mk
 
 .PHONY: docker
 docker: Dockerfile $(DNT)
@@ -23,7 +19,8 @@ docker: Dockerfile $(DNT)
 		echo "Skipping build in $(CURDIR): .disabled present"; \
 	else \
 		docker buildx build . -t $(NAME):$(TAG) \
-		  --platform linux/amd64 \
+			--platform linux/amd64 \
+			--load \
 			--build-arg uid=2000 \
 			--build-arg version=$(VERSION) \
 			$(if $(HTTP_PROXY), --build-arg HTTP_PROXY=$(HTTP_PROXY)) \

@@ -7,11 +7,7 @@ export PKG
 
 include vars.mk
 include ../templates/definitions.mk
-
-.PHONY: clean
-clean:
-	rm -rf $(DNT)
-	docker image ls --format "{{ .ID }}" $(NAME) | uniq | xargs docker image rm -f
+include ../templates/clean.mk
 
 XRD := xrd-control-plane-container-x86.$(VERSION).tgz
 TMPIMG := xrd-control-plane-container-x64.dockerv1.tgz

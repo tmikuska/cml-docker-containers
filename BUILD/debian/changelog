@@ -1,3 +1,12 @@
+refplat-images-docker (0.1.9) unstable; urgency=medium
+
+  * Cleanup & update
+    - renamed templates/makefile to templates/build.mk
+    - extracted clean targets into sub-makefile
+    - updated Thousandeyes version
+
+ -- Ralph Schmieder <rschmied@cisco.com>  Wed, 22 Oct 2025 18:34:04 +0200
+
 refplat-images-docker (0.1.8) unstable; urgency=medium
 
   * CI / release: workflow guard and logging

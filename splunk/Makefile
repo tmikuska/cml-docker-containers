@@ -1,1 +1,1 @@
-../templates/makefile
+../templates/build.mk

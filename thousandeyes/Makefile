@@ -7,11 +7,7 @@ export PKG
 
 include vars.mk
 include ../templates/definitions.mk
-
-.PHONY: clean
-clean:
-	rm -rf $(DNT)
-	docker image ls --format "{{ .ID }}" $(NAME) | uniq | xargs docker image rm -f
+include ../templates/clean.mk
 
 IMG := te-ea.tgz
 
