@@ -102,11 +102,11 @@ jobs:
           set -euo pipefail
           images_dir="BUILD/debian/refplat-images-docker/var/lib/libvirt/images"
           ts="${{ steps.bump.outputs.ts }}"
-          out_iso="docker-refplat-images-${ts}.iso"
+          out_iso="$(pwd)/docker-refplat-images-${ts}.iso"
           if [ -d "${images_dir}" ]; then
             echo "Creating ${out_iso} containing node-definitions and virl-base-images at ISO root..."
             # Create ISO with only the two top-level directories at the ISO root and volume label REFPLAT
-            (cd "${images_dir}" && xorriso -as mkisofs -V REFPLAT -r -J -o "../../../${out_iso}" node-definitions virl-base-images)
+            (cd "${images_dir}" && xorriso -as mkisofs -V REFPLAT -r -J -o "${out_iso}" node-definitions virl-base-images)
             ls -lh "${out_iso}" || true
           else
             echo "No images directory found at ${images_dir} — skipping ISO creation."
