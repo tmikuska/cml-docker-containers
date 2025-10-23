@@ -84,9 +84,7 @@ jobs:
           out_iso="docker-refplat-images-${ts}.iso"
           echo "Creating ${out_iso} from ${images_dir}"
           # Write ISO to workspace root to avoid relative path confusion
-          xorriso -as mkisofs -V REFPLAT -r -J \
-            -o "$PWD/${out_iso}" \
-            "$images_dir/node-definitions" "$images_dir/virl-base-images"
+          xorriso -as mkisofs -V REFPLAT -r -J -o "$PWD/${out_iso}" "$images_dir/"
           ls -lh "$PWD/$out_iso" || ls -lh "$out_iso"
           echo "out_iso=${out_iso}" >> "$GITHUB_OUTPUT"
 
