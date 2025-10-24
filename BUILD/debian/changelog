@@ -1,3 +1,9 @@
+refplat-images-docker (0.2.0) unstable; urgency=medium
+
+  * touches on documentation and GH actions
+
+ -- Ralph Schmieder <rschmied@cisco.com>  Fri, 24 Oct 2025 15:16:18 +0200
+
 refplat-images-docker (0.1.9) unstable; urgency=medium
   * ISO Release Workflow and Build Improvements
     - Added split ISO build support via make iso, make iso-list, and make clean-iso
