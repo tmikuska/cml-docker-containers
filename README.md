@@ -90,6 +90,12 @@ For building the .deb package you also need:
 - debhelper
 - fakeroot
 
+Documentation generation:
+
+- yq (YAML processor) — required only for ISO inventory doc generation via `scripts/generate-iso-inventory.sh`
+  - Linux (Debian/Ubuntu): `sudo apt-get install yq`
+  - macOS (Homebrew): `brew install yq`
+
 If you only need to build images (no Debian package, no ISOs), you only need `make` and Docker.
 
 ## How discovery & selection work
