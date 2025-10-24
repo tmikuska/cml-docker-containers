@@ -1,6 +1,12 @@
 refplat-images-docker (0.2.0) unstable; urgency=medium
 
   * touches on documentation and GH actions
+  * put container dirs into top level containers container :)
+  * re-organize ISO split:
+    - small, non-fast-moving containers go into default ISO
+    - browsers go into -browser ISO (they move fast)
+    - splunk goes into -splunk ISO (because it's big)
+  * create a release document which shows a TOC, -- what is on what ISO and how big is it
 
  -- Ralph Schmieder <rschmied@cisco.com>  Fri, 24 Oct 2025 15:16:18 +0200
 
