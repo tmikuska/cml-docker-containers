@@ -3,6 +3,7 @@ thousandeyes/te-ea.tgz
 refplat-images-docker*.deb
 refplat-images-docker*.changes
 refplat-images-docker*.buildinfo
+docker-refplat-images-*.iso
 BUILD/debian/.debhelper
 BUILD/debian/refplat-images-docker
 BUILD/debian/refplat-images-docker.substvars

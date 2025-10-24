@@ -37,7 +37,7 @@ jobs:
           set -euo pipefail
           sudo apt-get update
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-            ca-certificates curl gnupg2 jq make xorriso tar unzip python3
+            ca-certificates curl gnupg2 jq make xorriso tar unzip python3 yq
           # install gh CLI
           curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
           sudo chmod 644 /usr/share/keyrings/githubcli-archive-keyring.gpg
@@ -46,6 +46,7 @@ jobs:
           # clean apt cache
           sudo apt-get clean && sudo rm -rf /var/lib/apt/lists/*
           gh --version
+          yq --version
 
       - name: Create ISO artifacts via Makefile
         id: make_iso
@@ -123,12 +124,16 @@ jobs:
           set -euo pipefail
           tag='${{ steps.tagprep.outputs.tag }}'
           name='${{ inputs.release_name }}'; [ -n "$name" ] || name="Automated ISO release ${tag}"
-          body="Automated ISO-only release"
+          # Generate inventory on demand and use as release notes
+          images_root="BUILD/debian/refplat-images-docker/var/lib/libvirt/images"
+          ./scripts/generate-iso-inventory.sh '${{ steps.make_iso.outputs.ts }}' "$images_root" > ISO_INVENTORY.md
+          notes_file="ISO_INVENTORY.md"
           # create release idempotently as draft (not latest)
           if gh release view "${tag}" >/dev/null 2>&1; then
             echo "Release '${tag}' already exists"
+            gh release edit "${tag}" --notes-file "$notes_file"
           else
-            gh release create "${tag}" --title "${name}" --notes "${body}" --draft
+            gh release create "${tag}" --title "${name}" --notes-file "$notes_file" --draft
           fi
           # upload all ISOs + signatures
           jq -r '.[]' <<< '${{ steps.make_iso.outputs.isos_json }}' | while IFS= read -r iso; do
@@ -137,6 +142,8 @@ jobs:
             [ -f "${iso}.asc" ] || { echo "Missing signature: ${iso}.asc"; exit 1; }
             gh release upload "${tag}" "$iso" "${iso}.asc" --clobber
           done
+          # also upload the inventory markdown as an asset
+          # gh release upload "${tag}" "$notes_file" --clobber
 
       - name: List artifacts
         run: |
